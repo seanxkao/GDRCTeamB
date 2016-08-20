@@ -24,14 +24,13 @@ public class Player : Entity {
         if (Input.GetKeyDown(KeyCode.X)) {
             if (itemOnHand)
             {
-                itemOnHand.transform.parent = null;
+                itemOnHand.GetComponent<Item>().drop(gameObject);
                 itemOnHand = null;
                 
             }
             else if (itemNearby) {
                 itemOnHand = itemNearby;
-                itemOnHand.transform.SetParent(transform);
-                itemOnHand.transform.localPosition = Vector3.zero;
+                itemOnHand.GetComponent<Item>().pick(gameObject);
             }
         }
 
@@ -53,10 +52,11 @@ public class Player : Entity {
             move.x = 0;
         }
 
-        if (cameraController.GetComponent<CameraController>().turn)
+        if (!cameraController.GetComponent<CameraController>().turn)
         {
             move.x = -move.x;
         }
+
         if (axisY > 0 && onFloor)
         {
             move.y = jumpSpeed;

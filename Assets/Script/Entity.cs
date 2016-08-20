@@ -16,8 +16,14 @@ public class Entity : MonoBehaviour {
         rigidbody = GetComponent<Rigidbody>();
 	}
 
-    void FixedUpdate() {
-        
+    protected void FixedUpdate() {
+
+        Vector3 frontPos = front.transform.position;
+        Vector3 backPos = back.transform.position;
+        frontPos.z = zsort;
+        backPos.z = -zsort;
+        front.transform.position = frontPos;
+        back.transform.position = backPos;
         if ( !turning && cameraController.GetComponent<CameraController>().isTurning() ) {
             turning = true;
             if (rigidbody)
