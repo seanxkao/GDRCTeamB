@@ -3,13 +3,13 @@ using System.Collections;
 
 public class Item : Entity {
     public string name;
-    protected bool pickable;
+    public bool pickable;
     int state;
 
 	// Use this for initialization
 	void Start () {
         state = 0;
-        pickable = true;
+        //pickable = true;
         base.Start();
 	}
 
