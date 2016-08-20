@@ -53,8 +53,10 @@ public class Item : Entity {
         }
     }
     protected virtual void held()
-    {
-        //holding by player
+	{
+		Vector3 scale = transform.localScale;
+		scale.x = 1;
+		transform.localScale = scale;
     }
 
     protected virtual void used()

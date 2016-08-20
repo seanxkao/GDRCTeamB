@@ -28,6 +28,10 @@ public class FlowerTorch : Item {
 			Destroy (gameObject);
 		}
 	}
+	public override void pick(GameObject player){
+		zsort = 0.06f;
+		base.pick (player);
+	}
 	void OnTriggerEnter(Collider collider) {
 		if (collider.gameObject.CompareTag ("Cave")) {
 			cave = collider.gameObject;
