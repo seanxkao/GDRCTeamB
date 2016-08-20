@@ -14,7 +14,7 @@ public class AxeFlag : Item {
 		base.idle ();
 	}
 	public override void use(GameObject player){
-		if(treeCut) {
+		if(treeCut&&cameraController.GetComponent<CameraController>().turn) {
 			treeCut.GetComponent<TreeCut> ().cut ();
 			treeCut = null;
 		}

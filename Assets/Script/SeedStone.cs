@@ -8,13 +8,14 @@ public class SeedStone : Item {
 	float destroyPeriod = 2;
 	bool isNearPot;
 	public GameObject flowerTorch;
-	public GameObject pot;
+	GameObject pot;
 	public float onPotOffsetY;
 
 	protected new void Start(){
 		base.Start ();
 		destroying = false;
 		isNearPot = false;
+		pot = GameObject.Find ("Pot");
 	}
 	 	
 	void Update() {
@@ -34,7 +35,7 @@ public class SeedStone : Item {
 	}
 
 	public override void use (GameObject player){
-		if (isNearPot) {
+		if (isNearPot && !cameraController.GetComponent<CameraController>().turn) {
 			base.use (player);
 			GameObject newFlower = Instantiate (flowerTorch);
 			newFlower.GetComponent<FlowerTorch> ().cameraController = cameraController;
