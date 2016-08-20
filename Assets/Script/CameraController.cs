@@ -59,7 +59,7 @@ public class CameraController : MonoBehaviour {
     }
 	void FixedUpdate () {
         Vector3 pos = transform.position;
-        pos.x = Mathf.Lerp(pos.x, player.transform.position.x, 0.1f);
+		pos.x = Mathf.Lerp(pos.x, player.GetComponent<Player>().nowStage.transform.position.x, 0.1f);
         transform.position = pos;
 	}
     public bool isTurning() {

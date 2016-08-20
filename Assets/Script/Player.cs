@@ -9,13 +9,15 @@ public class Player : Entity {
     bool onFloor;
     public GameObject itemOnHand;
     public GameObject itemNearby;
+	public GameObject nowStage;
 
 	// Use this for initialization
-    void Start()
+    new void Start()
     {
         base.Start();
         itemOnHand = null;
         itemNearby = null;
+		nowStage = GameObject.Find ("Stage1");
 	}
 	
     void Update() {
@@ -69,7 +71,6 @@ public class Player : Entity {
             onFloor = true;
         }
     }
-
 
     void OnCollisionStay(Collision collision)
     {
