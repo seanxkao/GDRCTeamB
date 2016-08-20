@@ -25,28 +25,21 @@ public class Player : Entity {
             if (itemOnHand)
             {
                 itemOnHand.transform.parent = null;
-                itemOnHand.GetComponent<Rigidbody>().useGravity = true;
                 itemOnHand = null;
                 
             }
             else if (itemNearby) {
                 itemOnHand = itemNearby;
                 itemOnHand.transform.SetParent(transform);
-                itemOnHand.GetComponent<Rigidbody>().useGravity = false;
-                itemOnHand.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 itemOnHand.transform.localPosition = Vector3.zero;
             }
         }
 
-        if (itemOnHand)
-        {
-            //itemOnHand.transform.localPosition = Vector3.zero;
-        }
     }
 
     protected override void moveEntity()
     {
-        Vector3 move = GetComponent<Rigidbody>().velocity;
+        Vector3 move = rigidbody.velocity;
         if (axisX > 0)
         {
             move.x = walkSpeed;
@@ -68,7 +61,7 @@ public class Player : Entity {
         {
             move.y = jumpSpeed;
         }
-        GetComponent<Rigidbody>().velocity = move;
+        rigidbody.velocity = move;
     }
 
     void OnCollisionEnter(Collision collision) {
