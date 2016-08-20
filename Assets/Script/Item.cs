@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Item : Entity {
+	public Vector3 offsetOnFloor;
     public string name;
     public bool pickable;
     int state;
@@ -18,7 +19,7 @@ public class Item : Entity {
     }
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	protected void FixedUpdate () {
         switch (state) { 
             case 0:
                 idle();
@@ -34,15 +35,15 @@ public class Item : Entity {
         base.FixedUpdate();
 	}
 
-    protected void idle()
+    protected virtual void idle()
     {
         RaycastHit[] hits = Physics.RaycastAll(transform.position, new Vector3(0, -1, 0));
         foreach(RaycastHit hit in hits)
         {
             if (hit.collider.gameObject.CompareTag("Floor"))
             {
-                transform.position = Vector3.Lerp(transform.position, hit.point + new Vector3(0, 0.5f, 0), 0.2f);
-                //break;
+				transform.position = Vector3.Lerp(transform.position, hit.point + offsetOnFloor, 0.2f);
+                break;
             }
         }
     }
@@ -55,7 +56,7 @@ public class Item : Entity {
     {
         //after used
     }
-    public virtual void pick(GameObject player)
+	public virtual void pick(GameObject player)
     {
         //TODO: picked by player
         transform.SetParent(player.transform);

@@ -12,7 +12,7 @@ public class Player : Entity {
 	public GameObject nowStage;
 
 	// Use this for initialization
-    new void Start()
+    protected new void Start()
     {
         base.Start();
         itemOnHand = null;
@@ -35,19 +35,28 @@ public class Player : Entity {
                 itemOnHand.GetComponent<Item>().pick(gameObject);
             }
         }
+		if (Input.GetKeyDown (KeyCode.C)) {
+			if (itemOnHand) {
+				itemOnHand.GetComponent<Item>().use(gameObject);
+			}
+		}
 
     }
 
     protected override void moveEntity()
     {
         Vector3 move = rigidbody.velocity;
+		Vector3 scale = transform.localScale;
+
         if (axisX > 0)
         {
             move.x = walkSpeed;
+			scale.x = +1;
         }
         else if (axisX < 0)
         {
             move.x = -walkSpeed;
+			scale.x = -1;
         }
         else
         {
@@ -64,8 +73,9 @@ public class Player : Entity {
             move.y = jumpSpeed;
         }
         rigidbody.velocity = move;
-    }
 
+		transform.localScale = scale;
+    }
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Floor")) {
             onFloor = true;
@@ -87,7 +97,7 @@ public class Player : Entity {
         }
     }
 
-    void OnTriggerEnter(Collider collider) {
+    void OnTriggerStay(Collider collider) {
         GameObject item = collider.gameObject;
         if (item.GetComponent<Item>() && item.GetComponent<Item>().isPickable())
         {
