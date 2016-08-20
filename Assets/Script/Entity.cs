@@ -17,13 +17,14 @@ public class Entity : MonoBehaviour {
 	}
 
     protected void FixedUpdate() {
-
+		//sorting
         Vector3 frontPos = front.transform.position;
         Vector3 backPos = back.transform.position;
         frontPos.z = zsort;
         backPos.z = -zsort;
         front.transform.position = frontPos;
         back.transform.position = backPos;
+		//move or freeze
         if ( !turning && cameraController.GetComponent<CameraController>().isTurning() ) {
             turning = true;
             if (rigidbody)
@@ -40,7 +41,8 @@ public class Entity : MonoBehaviour {
                 rigidbody.velocity = pastV;
             }
         }
-        moveEntity();
+		if(!turning)
+        	moveEntity();
     }
     protected virtual void moveEntity(){
     }

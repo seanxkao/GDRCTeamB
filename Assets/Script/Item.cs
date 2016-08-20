@@ -3,14 +3,17 @@ using System.Collections;
 
 public class Item : Entity {
 	public Vector3 offsetOnFloor;
-    public string name;
+	public Vector3 offsetOnHand;
+	public Vector3 angleOnFloor;
+	public Vector3 angleOnHand;
+
+    new public string name;
     public bool pickable;
-    int state;
+    public int state;
 
 	// Use this for initialization
-	void Start () {
-        state = 0;
-        //pickable = true;
+	protected new void Start () {
+        pickable = true;
         base.Start();
 	}
 
@@ -31,7 +34,6 @@ public class Item : Entity {
                 used();
                 break;
         }
-
         base.FixedUpdate();
 	}
 
@@ -43,6 +45,9 @@ public class Item : Entity {
             if (hit.collider.gameObject.CompareTag("Floor"))
             {
 				transform.position = Vector3.Lerp(transform.position, hit.point + offsetOnFloor, 0.2f);
+				Quaternion rotation = transform.rotation;
+				rotation.eulerAngles = angleOnFloor;
+				transform.rotation = rotation;
                 break;
             }
         }
@@ -60,7 +65,8 @@ public class Item : Entity {
     {
         //TODO: picked by player
         transform.SetParent(player.transform);
-        transform.localPosition = new Vector3(0.3f, 0.3f, 0);
+		transform.localPosition = offsetOnHand;
+		transform.localEulerAngles = angleOnHand;
         state = 1;
     }
     public virtual void drop(GameObject player)

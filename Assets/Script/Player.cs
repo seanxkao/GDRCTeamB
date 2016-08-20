@@ -30,7 +30,7 @@ public class Player : Entity {
                 itemOnHand = null;
                 
             }
-            else if (itemNearby) {
+			else if (itemNearby && itemNearby.GetComponent<Item>().isPickable()) {
                 itemOnHand = itemNearby;
                 itemOnHand.GetComponent<Item>().pick(gameObject);
             }
@@ -47,33 +47,40 @@ public class Player : Entity {
     {
         Vector3 move = rigidbody.velocity;
 		Vector3 scale = transform.localScale;
+		bool turn = cameraController.GetComponent<CameraController> ().turn;
 
-        if (axisX > 0)
-        {
-            move.x = walkSpeed;
-			scale.x = +1;
+		if (axisX > 0) {
+			if (turn) {
+				move.x = walkSpeed;
+				scale.x = -1;
+			} else {
+				move.x = -walkSpeed;
+				scale.x = +1;
+			}
         }
         else if (axisX < 0)
         {
-            move.x = -walkSpeed;
-			scale.x = -1;
+			if (turn) {
+				move.x = -walkSpeed;
+				scale.x = +1;
+			} else {
+				move.x = walkSpeed;
+				scale.x = -1;
+			}
         }
         else
         {
             move.x = 0;
         }
 
-        if (!cameraController.GetComponent<CameraController>().turn)
-        {
-            move.x = -move.x;
-        }
 
         if (axisY > 0 && onFloor)
         {
             move.y = jumpSpeed;
-        }
-        rigidbody.velocity = move;
+		}
 
+
+        rigidbody.velocity = move;
 		transform.localScale = scale;
     }
     void OnCollisionEnter(Collision collision) {

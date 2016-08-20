@@ -8,9 +8,9 @@ public class AxeFlag : Item {
 	void Start() {
 		base.Start ();
 		treeCut = null;
+		pickable = true;
 	}
 	protected override void idle(){
-		pickable = cameraController.GetComponent<CameraController>().turn;
 		base.idle ();
 	}
 	public override void use(GameObject player){

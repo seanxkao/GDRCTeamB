@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SeedStone : MonoBehaviour {
-
+public class SeedStoneHeap : Item {
+	public GameObject seedStone;
 	// Use this for initialization
-	void Start () {
+	protected void Start () {
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public override void pick (GameObject player)
+	{
+		GameObject newSeed = Instantiate(seedStone);
+		newSeed.GetComponent<SeedStone> ().cameraController = cameraController;
+		newSeed.GetComponent<SeedStone>().pick (player);
+		player.GetComponent<Player> ().itemOnHand = newSeed;
 	}
 }
