@@ -4,7 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour {
 
-	public string loadScene;
+	public string loadScene1;
+	public string loadScene2;
 
 	// Use this for initialization
 	void Start () {
@@ -18,13 +19,18 @@ public class Menu : MonoBehaviour {
 
 	public void StartGame () {
 		print ("StartGame");
-		//SceneManager.LoadScene (loadScene);
+		SceneManager.LoadScene (loadScene1);
 	}
 
 
 	public void ExitGame () {
 		print ("ExitGame");
 		Application.Quit();
+	}
+
+	public void BackMenu() {
+		print ("BackMenu");
+		SceneManager.LoadScene (loadScene2);
 	}
 		
 }
